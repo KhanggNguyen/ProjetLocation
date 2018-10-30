@@ -1,0 +1,4 @@
+# src/UM2/CoreBundle/Resources/config/routing.yml
+um2_core_home:
+    path:     /
+    defaults: { _controller: UM2CoreBundle:Core:index }

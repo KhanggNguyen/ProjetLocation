@@ -1,0 +1,17 @@
+{% extends "UM2CoreBundle::layout.html.twig" %}
+{% form_theme formOutils 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+	{{ form_start(formOutils) }}
+	{{ form_row(formOutils.titre, {'label' : 'Le titre de l\'objet à louer', 'attr' : {'placeholder' : 'Perceuse à louer ...'}}) }}
+	{{ form_row(formOutils.prixNeuf, { 'label' : 'Le prix neuf de l\'objet', 'attr' : { 'placeholder' : '50'}}) }}
+	{{ form_row(formOutils.lieu, { 'label' : 'Le lieu de location', 'attr' : { 'placeholder' : 'Montpellier,...'}}) }}
+	{{ form_row(formOutils.image.file, { 'label' : 'L\'image de description'})}}
+	{{ form_row(formOutils.garantie, { 'label' : 'L\'objet sous garantie'}) }}
+	{{ form(formOutils) }}
+	<div>
+        <input type="submit" class="btn btn-primary" value="Ajouter" />
+    </div>
+	{{ form_end(formOutils)}}
+
+
+{% endblock %}

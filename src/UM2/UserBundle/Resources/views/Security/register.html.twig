@@ -1,0 +1,23 @@
+{% extends "UM2UserBundle::layout.html.twig" %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block fos_user_content %}
+	{{ form_start(form)}}
+	{{ form_row(form.username, {'label' : ' Nom d\'utilisateur', 'attr' : {'placeholder' : 'Jeff,...'}}) }}	
+	{{ form_row(form.email, {'label' : ' Adresse d\'email', 'attr' : {'placeholder' : 'exemple@gmail.com'}}) }}
+	{{ form_row(form.password, {'label' : 'Mot de passe', 'attr' : {'placeholder' : 'La longueur du mot de passe doit être supérieur à 6'}}) }}
+	{{ form_row(form.confirm_password, {'label' : 'Confirmation du mot de passe', 'attr' : {'placeholder' : 'Répétez votre mot de passe'}}) }}
+	{{ form_row(form.adresse, {'label' : ' Adresse domicile', 'attr' : {'placeholder' : '1 rue du A '}}) }}
+	{{ form_row(form.ville) }}
+	{{ form_row(form.telephone , {'label' : 'Numéro de téléphone', 'attr' : {'placeholder' : '07 11 11 11 11'}}) }}
+	<div>
+        
+		{% if editMode %}
+			<input type="submit" class="btn btn-primary" value="Enregistrer"/>
+		{% else %}
+			<input type="submit" class="btn btn-primary" value="S'inscrire"/>
+		{% endif %}
+    </div>
+	{{ form_end(form) }}
+
+{% endblock fos_user_content %}

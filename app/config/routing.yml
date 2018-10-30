@@ -1,0 +1,9 @@
+um2_core:
+    resource: "@UM2CoreBundle/Resources/config/routing.yml"
+
+um2_platform:
+    resource: "@UM2PlatformBundle/Resources/config/routing.yml"
+    prefix:  
+
+um2_user:
+    resource: "@UM2UserBundle/Resources/config/routing.yml"

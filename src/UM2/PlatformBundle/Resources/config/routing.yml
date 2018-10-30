@@ -1,0 +1,18 @@
+um2_outil_view:
+    path: /outils/view/{id}
+    defaults: { _controller: UM2PlatformBundle:Outils:view }
+    requirements:
+        id: \d+
+
+um2_outil_add:
+    path: /outils/add/
+    defaults: { _controller: UM2PlatformBundle:Outils:add }
+
+um2_outil_index:
+    path: /outils/{page}
+    defaults:
+        _controller: UM2PlatformBundle:Outils:index 
+        page:        1
+    requirements: 
+        page: \d*
+

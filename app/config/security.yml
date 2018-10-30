@@ -1,0 +1,37 @@
+# To get started with security, check out the documentation:
+# https://symfony.com/doc/current/security.html
+security:
+    encoders:
+        UM2\UserBundle\Entity\User: 
+            algorithm: bcrypt
+
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: ROLE_ADMIN
+
+    # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    providers:
+        in_memory:
+            memory: ~
+        our_db_provider:
+            entity:
+                class: UM2\UserBundle\Entity\User
+                property: email
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            pattern:    ^/
+            http_basic: ~
+            anonymous:    true
+            provider: our_db_provider
+            form_login:
+                login_path: um2_user_login
+                check_path: um2_user_login
+                default_target_path: /
+            logout:
+                path: um2_user_logout
+                target: /login

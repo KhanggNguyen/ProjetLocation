@@ -1,0 +1,20 @@
+um2_user_register:
+    path:     /register/
+    defaults: { _controller: UM2UserBundle:Security:register}
+
+um2_user_login:
+    path:     /login/
+    defaults: { _controller: UM2UserBundle:Security:login}
+
+um2_user_edit:
+    path:     /edit/
+    defaults: { _controller: UM2UserBundle:Security:register}
+
+um2_user_logout:
+  path:       /logout/
+  defaults: { _controller: UM2UserBundle:Security:logout}
+
+um2_user_reset:
+  path: /reset/
+  defaults: { _controller: UM2UserBundle:Security:reset}
+
