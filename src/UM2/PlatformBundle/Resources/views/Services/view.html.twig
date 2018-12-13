@@ -1,0 +1,45 @@
+{% extends "UM2CoreBundle::layout.html.twig" %}
+{% block body %}
+<div class="row">
+<h2>{{ service.titre }}</h2>
+<i>Par <a href="{{path('um2_user_view', {'id': service.vendeur.id}) }}">{{ service.vendeur.username }}</a>, le {{ service.date|date('d/m/Y') }} à {{ service.lieu }} </i>
+<p> Prix de location {{ service.prix }}€ par heure </p>
+<p> Les plages horaire à proposer sont </p>
+<ul>
+{% for horaire in service.plageshoraire %}
+	{% if date(horaire.dateService) > date() %}
+		<p> Jour : {{ horaire.dateService|date('d/m/Y')}}, de {{ horaire.heuredebut|date('H:i')}} à {{ horaire.heurefin|date('H:i') }} </p> 
+		{% if app.user is not null %}
+			{% if not horaire.estLoue %}
+				{% if service.vendeur.id != app.user.id %}
+				<a href="{{ path('um2_service_rent', {'idService' : service.id , 'idHoraire' : horaire.id }) }}" class="btn btn-default">Louer</a>
+				{% endif %}
+			{% else %}
+				<p class="alert alert-info"> Ce service a été loué </p>
+			{% endif %}
+		{% endif %}
+	{% endif %}
+{% endfor %}
+</ul>
+{% if app.user is not null %}
+	{% if service.vendeur.id == app.user.id %}
+		<a href="{{ path('um2_service_edit', { 'id' : service.id }) }}" class="btn btn-default">Editer</a>
+		{% if service.active %}
+			<a href="{{ path('um2_service_deactivate', { 'id' : service.id }) }}" class="btn btn-default">Désactiver</a>
+		{% else %}
+			<a href="{{ path('um2_service_activate', { 'id' : service.id }) }}" class="btn btn-default">Activer</a>
+		{% endif %}
+		<a href="{{ path('um2_service_delete', { 'id' : service.id }) }}" class="btn btn-default">Supprimer</a>
+	{% endif %}
+{% endif %}
+</div>
+
+{% for flashMessage in app.session.flashbag.get('notice') %}
+
+<div class="alert alert-success">
+    {{ flashMessage }}
+</div>
+
+{% endfor %}
+
+{% endblock body %}

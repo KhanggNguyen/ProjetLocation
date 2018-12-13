@@ -25,6 +25,7 @@ security:
 
         main:
             pattern:    ^/
+            user_checker: UM2\UserBundle\Security\UserChecker
             http_basic: ~
             anonymous:    true
             provider: our_db_provider
@@ -35,3 +36,17 @@ security:
             logout:
                 path: um2_user_logout
                 target: /login
+
+        secured_area:
+            # ...
+            form_login:
+                # ...
+                csrf_token_generator: security.csrf.token_manager
+                csrf_parameter: _csrf_security_token
+                csrf_token_id: a_private_string
+
+    access_control:
+        - {path: ^/admin, roles: ROLE_SUPER_ADMIN}
+        - {path: /login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+
+    always_authenticate_before_granting: true

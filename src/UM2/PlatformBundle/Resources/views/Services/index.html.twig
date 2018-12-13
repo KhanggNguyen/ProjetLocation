@@ -2,21 +2,21 @@
 
 {% block body %}
 
-	<h2>Liste des annonces</h2>
+	<h2>Liste des services</h2>
 
 	<ul>
-		{% for outil in listOutils %}
-			{% if outil.active %}
+		{% for service in listServices %}
+			{% if service.active %}
 			<li>
-				<a href=" {{path('um2_outil_view', {'id' : outil.id}) }}">
-					{{ outil.titre }}
+				<a href=" {{path('um2_service_view', {'id' : service.id}) }}">
+					{{ service.titre }}
 				</a>
-				par {{ outil.vendeur.username }}, 
-				le {{ outil.date|date('d/m/Y') }}
+				par {{ service.vendeur.username }}, 
+				le {{ service.date|date('d/m/Y') }}
 			</li>
 			{% endif %}
 			{% else %}
-			 <li> Pas (encore!) d'annonces</li>
+			 <li> Pas (encore!) de services</li>
 		{% endfor %}
 	</ul>
 

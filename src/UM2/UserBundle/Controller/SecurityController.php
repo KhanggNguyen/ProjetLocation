@@ -1,5 +1,5 @@
 <?php
-
+//auteur : Khang NGUYEN - Licence 3 
 namespace UM2\UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 use UM2\UserBundle\Entity\User;
 use UM2\UserBundle\Form\RegistrationType;
@@ -55,8 +56,27 @@ class SecurityController extends Controller
     	]);
     }
 
-    public function loginAction()
+    public function loginAction(AuthenticationUtils $authenticationUtils)
     {
+        $auth_checker = $this->get('security.authorization_checker');
+        $token = $this->get('security.token_storage')->getToken();
+        $user = $token->getUser();
+
+        if($auth_checker->isGranted('IS_AUTHENTICATED_REMEMBERED')){
+            return $this->redirectToRoute("um2_user_view", ['id' => $user->getId()]);
+        }
+        
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+        //if($error instanceof AccountStatusException )
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();        
+
+        return $this->render('UM2UserBundle:Security:login.html.twig', array(
+            'last_username' => $lastUsername,
+            'error'         => $error,
+        ));
+        
     	return $this->render('UM2UserBundle:Security:login.html.twig');
     }
 

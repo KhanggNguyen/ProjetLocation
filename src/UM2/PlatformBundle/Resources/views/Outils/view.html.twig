@@ -1,0 +1,42 @@
+{% extends "UM2CoreBundle::layout.html.twig" %}
+{% block body %}
+
+<!-- <link rel="stylesheet" href="{{ asset('css/calendar.css') }}"> -->
+
+<div style="float: left; margin-right: 1em;" class="row">
+	{% if outil.image is not null %}
+		<img src="{{ asset(outil.image.webPath) }}"  height="450">
+	{% endif %}
+</div>
+<br>
+<div class="row">
+<h2>{{ outil.titre }}</h2>
+<i>Par <a href="{{path('um2_user_view', {'id': outil.vendeur.id}) }}">{{ outil.vendeur.username }}</a>, le {{ outil.date|date('d/m/Y') }} à {{ outil.lieu }} </i>
+<p> Prix de location {{ outil.prixNeuf / 200}}€ par jour </p>
+
+{% if app.user is not null %}
+	{% if outil.vendeur.id == app.user.id %}
+		<a href="{{ path('um2_outil_edit', { 'id' : outil.id }) }}" class="btn btn-default">Editer</a>
+		{% if outil.active %}
+			<a href="{{ path('um2_outil_deactivate', { 'id' : outil.id }) }}" class="btn btn-default">Désactiver</a>
+		{% else %}
+			<a href="{{ path('um2_outil_activate', { 'id' : outil.id }) }}" class="btn btn-default">Activer</a>
+		{% endif %}
+		<a href="{{ path('um2_outil_delete', { 'id' : outil.id }) }}" class="btn btn-default">Supprimer</a>
+	{% else %}
+		<form action="{{ path('um2_outil_rent', { 'id' : outil.id }) }}" method ="POST">
+			<input type="date" name="dateLoue" min="{{ "now"|date("Y-m-d") }}">
+		<!-- <a href="{{ path('um2_outil_rent', { 'id' : outil.id }) }}" class="btn btn-default">Louer</a> -->
+			<button type="submit" class="btn btn-succes" name="submit">Louer</button>
+		</form>
+	{% endif %}
+{% endif %}
+</div>
+{% for flashMessage in app.session.flashbag.get('flash_key') %}
+<p class="alert alert-danger">
+    {{ flashMessage }}
+</p>
+{% endfor %}
+	
+
+{% endblock body %}

@@ -1,19 +1,20 @@
 <?php
 // src/UserBundle/Entity/User.php
-
+//auteur : Khang NGUYEN - Licence 3 
 namespace UM2\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="um2_user")
  */
-class User implements UserInterface
+class User implements AdvancedUserInterface, \Serializable
 {
     /**
      * @ORM\Id
@@ -71,6 +72,14 @@ class User implements UserInterface
 
     /**
      *
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateNaissance", type="datetime")
+     */
+    private $dateNaissance;
+
+    /**
+     *
      * @var string
      *
      * @ORM\Column(name="telephone", type="string", length=255)
@@ -83,19 +92,55 @@ class User implements UserInterface
      *
      * @var boolean
      *
-     * @ORM\Column(name="estActive", type="boolean")
+     * @ORM\Column(name="isNonLocked", type="boolean")
      */
-    private $estActive;
+    private $isNonLocked;
+
+    /**
+     *
+     * @var boolean
+     *
+     * @ORM\Column(name="estTropConsomme", type="boolean")
+     */
+    private $estTropConsomme;
+
+    /**
+     *
+     * @var boolean
+     *
+     * @ORM\Column(name="isActive", type="boolean")
+     */
+    private $isActive;
+
+    /**
+     *
+     * @var \DateTime
+     * @ORM\Column(name="dateActive", type="datetime")
+     *
+     */
+    private $dateActive;
+
 
     /**
      * @ORM\Column(type="array")
      */
     private $roles;
 
+    /**
+     *
+     * @var int
+     *
+     * @ORM\Column(name="cagnote", type="integer");
+     *
+     */
+    private $cagnote = 0;
+
     public function __construct()
-    {
-        $this->estActive = true;
+    {   $this->isNonLocked = true;
+        $this->isActive = true;
+        $this->estTropConsomme = false;
         $this->roles = array('ROLE_USER');
+        $this->dateActive = new \DateTime();
     }
 
     /**
@@ -268,21 +313,21 @@ class User implements UserInterface
      *
      * @return User
      */
-    public function setEstActive($estActive)
+    public function setIsActive($estActive)
     {
-        $this->estActive = $estActive;
+        $this->isActive = $estActive;
 
         return $this;
     }
 
     /**
-     * Get estActive
+     * Get isActive
      *
      * @return boolean
      */
-    public function getEstActive()
+    public function isEnabled()
     {
-        return $this->estActive;
+        return $this->isActive;
     }
 
     /**
@@ -297,5 +342,183 @@ class User implements UserInterface
         $this->roles = $roles;
 
         return $this;
+    }
+
+    /**
+     * Set cagnote
+     *
+     * @param integer $cagnote
+     *
+     * @return User
+     */
+    public function setCagnote()
+    {
+        $this->cagnote = $this->cagnote + 1;
+
+        return $this;
+    }
+
+    /**
+     * Get cagnote
+     *
+     * @return integer
+     */
+    public function getCagnote()
+    {
+        return $this->cagnote;
+    }
+
+    /**
+     * Set dateNaissance
+     *
+     * @param \DateTime $dateNaissance
+     *
+     * @return User
+     */
+    public function setDateNaissance($dateNaissance)
+    {
+        $this->dateNaissance = $dateNaissance;
+
+        return $this;
+    }
+
+    /**
+     * Get dateNaissance
+     *
+     * @return \DateTime
+     */
+    public function getDateNaissance()
+    {
+        return $this->dateNaissance;
+    }
+
+    /**
+     * Set dateActive
+     *
+     * @param \DateTime $dateActive
+     *
+     * @return User
+     */
+    public function setDateActive($dateActive)
+    {
+        $this->dateActive = $dateActive;
+
+        return $this;
+    }
+
+    /**
+     * Get dateActive
+     *
+     * @return \DateTime
+     */
+    public function getDateActive()
+    {
+        return $this->dateActive;
+    }
+
+    public function isAccountNonExpired()
+    {
+        return false;
+    }
+
+    public function isAccountNonLocked()
+    {
+        return false;
+    }
+
+    public function isCredentialsNonExpired()
+    {
+        return false;
+    }
+
+    // serialize and unserialize must be updated - see below
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->email,
+            $this->password,
+            $this->adresse,
+            $this->ville,
+            $this->dateNaissance,
+            $this->telephone,
+            $this->isNonLocked,
+            $this->isActive,
+        ));
+    }
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->email,
+            $this->password,
+            $this->adresse,
+            $this->ville,
+            $this->dateNaissance,
+            $this->telephone,
+            $this->isNonLocked,
+            $this->isActive,
+        ) = unserialize($serialized);
+    }
+
+
+    /**
+     * Set isNonLocked
+     *
+     * @param boolean $isNonLocked
+     *
+     * @return User
+     */
+    public function setIsNonLocked($isNonLocked)
+    {
+        $this->isNonLocked = $isNonLocked;
+
+        return $this;
+    }
+
+    /**
+     * Get isNonLocked
+     *
+     * @return boolean
+     */
+    public function getIsNonLocked()
+    {
+        return $this->isNonLocked;
+    }
+
+    /**
+     * Set estTropConsomme
+     *
+     * @param boolean $estTropConsomme
+     *
+     * @return User
+     */
+    public function setEstTropConsomme($estTropConsomme)
+    {
+        $this->estTropConsomme = $estTropConsomme;
+
+        return $this;
+    }
+
+    /**
+     * Get estTropConsomme
+     *
+     * @return boolean
+     */
+    public function getEstTropConsomme()
+    {
+        return $this->estTropConsomme;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return boolean
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
     }
 }

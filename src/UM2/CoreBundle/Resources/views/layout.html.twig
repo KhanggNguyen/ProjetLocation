@@ -12,7 +12,7 @@
             <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
             <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-            <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+            <link rel="stylesheet" href="{{ asset('css/style.css') }}">
             <!-- Optional theme -->
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
         {% endblock %}
@@ -36,8 +36,11 @@
                 <h3>Les annonces</h3>
                 <ul class="nav nav-pills nav-stacked">
                     <li><a href="{{ path('um2_core_home') }}">Accueil</a></li>
+                    <li><a href="{{ path('um2_outil_index')}}">Liste des annonces</a></li>
+                    <li><a href="{{ path('um2_service_index')}}">Liste des services</a></li>
                     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                         <li><a href="{{ path('um2_outil_add') }}">Ajouter une annonce</a></li>
+                        <li><a href="{{ path('um2_service_add') }}">Ajouter un service</a></li>
                     {% endif %}
                 </ul>
 
@@ -46,8 +49,15 @@
                 <ul class="nav nav-pills nav-stacked">
                 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                     Bonjour {{ app.user.username }} !
+                    {% if is_granted('ROLE_USER') %}
+                        
+                    {% endif %}
                     <br>
-                    <li><a href="{{ path('um2_user_edit') }}">Modifier</a></li>
+                    <li><a href="{{ path('um2_outils_user') }}">Mes outils</a></li>
+                    <li><a href="{{ path('um2_services_user') }}">Mes services</a></li>
+                    <li><a href="{{ path('um2_command_encours')}}">Mes commandes en cours </a><li>
+
+                    <li><a href="{{ path('um2_user_view', {'id' : app.user.id }) }}">Mon compte</a></li>
                     <li><a href="{{ path('um2_user_logout') }}">Déconnexion</a></li>
                 {% else %}
                     <li><a href="{{ path('um2_user_login') }}">Connexion</a></li>
@@ -61,16 +71,15 @@
                 {% endblock %}
             </div> 
         </div>
-
-        <footer class="navbar navbar-fixed-bottom">
-            <p>The sky's the limit © {{ 'now'|date('Y') }} and beyond.</p>
-        </footer>
+        
     </div>
-
+    <footer class="navbar navbar-fixed-bottom footer">
+        <center>The sky's the limit © {{ 'now'|date('Y') }} and beyond.</center>
+    </footer>
 
     {% block javascripts %}
     {# Ajoutez ces lignes JavaScript si vous comptez vous servir des fonctionnalités du bootstrap Twitter #}
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     {% endblock %}
     </body>

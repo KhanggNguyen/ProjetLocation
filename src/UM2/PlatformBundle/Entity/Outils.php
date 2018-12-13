@@ -1,6 +1,6 @@
 <?php 
 // src/PlatformBundle/Entity/Outils.php
-
+//auteur : Khang NGUYEN - Licence 3 
 namespace UM2\PlatformBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -39,7 +39,7 @@ class Outils
 	  * @var float
 	  *
 	  * @ORM\Column(name="prixNeuf", type="float")
-      * @Assert\Length(min=10)
+      * @Assert\Notblank()
 	  */
     private $prixNeuf;
 
@@ -84,8 +84,26 @@ class Outils
      */
     private $vendeur;
 
+    /**
+     *
+     * @var boolean
+     *
+     * @ORM\Column(name="estDispo", type="boolean")
+     */
+    private $estDispo;
+
+    /**
+     *
+     * @var boolean
+     *
+     * @ORM\Column(name="active", type="boolean")
+     */
+    private $active;
+
     public function __construct()
     {
+        $this->estDispo = true;
+        $this->active = true;
     }
 
     /**
@@ -153,7 +171,7 @@ class Outils
      *
      * @return Outils
      */
-    public function setDate($date)
+    public function setDate()
     {
         $this->date = new \DateTime();
 
@@ -264,5 +282,53 @@ class Outils
     public function getVendeur()
     {
         return $this->vendeur;
+    }
+
+    /**
+     * Set active
+     *
+     * @param boolean $active
+     *
+     * @return Outils
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return boolean
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * Set estDispo
+     *
+     * @param boolean $estDispo
+     *
+     * @return Outils
+     */
+    public function setEstDispo($estDispo)
+    {
+        $this->estDispo = $estDispo;
+
+        return $this;
+    }
+
+    /**
+     * Get estDispo
+     *
+     * @return boolean
+     */
+    public function getEstDispo()
+    {
+        return $this->estDispo;
     }
 }

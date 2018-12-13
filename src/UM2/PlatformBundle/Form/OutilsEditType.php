@@ -9,7 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use UM2\PlatformBundle\Form\ImageType;
 use UM2\PlatformBundle\Entity\Outils;
 
-class OutilsType extends AbstractType
+class OutilsEditType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -17,7 +17,7 @@ class OutilsType extends AbstractType
                 ->add('prixNeuf', NumberType::class)
                 ->add('lieu')
                 ->add('garantie')
-                ->add('image', ImageType::class);
+                ->add('image', ImageType::class, ['required' => false]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

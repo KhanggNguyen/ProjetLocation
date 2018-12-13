@@ -1,5 +1,6 @@
 <?php
 // src/OC/PlatformBundle/Form/ImageType.php
+//auteur : Khang NGUYEN - Licence 3 
 namespace UM2\PlatformBundle\Form;
 
 

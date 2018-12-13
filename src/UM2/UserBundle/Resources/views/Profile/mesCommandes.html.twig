@@ -1,0 +1,47 @@
+{% extends "UM2CoreBundle::layout.html.twig" %}
+
+{% block body %}
+
+	<h2>Liste des commandes d'outils</h2>
+
+	<ul>
+		{% for outilUser in listOutilsUser %}
+			{% for outil in listOutils %}
+				{% if outil.id == outilUser.outil.id %}
+					{% if date(outilUser.date) >= date() %}
+						<li>
+							<a href=" {{path('um2_outil_view', {'id' : outil.id}) }}">
+								{{ outil.titre }}
+							</a>
+							par {{ outil.vendeur.username }}, 
+							le {{ outil.date|date('d/m/Y') }}
+							<p> Loue le : {{ outilUser.date|date('d/m/Y') }} </p>
+						</li>
+					{% endif %}
+				{% endif %}
+			{% endfor %}
+		{% endfor %}
+	</ul>
+
+	<h2>Liste des commandes de services</h2>
+
+	<ul>
+		{% for serviceUser in listServicesUser %}
+			{% for service in listServices %}
+				{% if service.id == serviceUser.service.id %}
+					{% if date(serviceUser.date) >= date() %}
+						<li>
+							<a href=" {{path('um2_service_view', {'id' : service.id}) }}">
+								{{ service.titre }}
+							</a>
+							par {{ service.vendeur.username }}, 
+							le {{ service.date|date('d/m/Y') }}
+							<p> Loue le : {{ serviceUser.date|date('d/m/Y') }} </p>
+						</li>
+					{% endif %}
+				{% endif %}
+			{% endfor %}
+		{% endfor %}
+	</ul>
+
+{% endblock body %}

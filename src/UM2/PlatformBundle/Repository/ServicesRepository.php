@@ -6,15 +6,15 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 
-class OutilsRepository extends EntityRepository
+class ServicesRepository extends EntityRepository
 {
 
-	public function getOutils($page, $nbPerPage)
+	public function findByPage($page, $nbPerPage)
 	{
-		$query = $this->createQueryBuilder('o')
-			->where('o.active = :etat')
+		$query = $this->createQueryBuilder('s')
+			->where('s.active = :etat')
 			->setParameter('etat', true)
-			->orderBy('o.date', 'DESC')
+			->orderBy('s.date', 'DESC')
 			->getQuery();
 
 		$query->setFirstResult(($page-1) * $nbPerPage)->setMaxResults($nbPerPage);
@@ -22,20 +22,16 @@ class OutilsRepository extends EntityRepository
 		return new Paginator($query, true);
 	}
 
-	public function getOutilsByUser($id,$page, $nbPerPage){
-		$query = $this->createQueryBuilder('o')
-			->where('o.vendeur = :vendeur')
+	public function findByVendeur($id,$page, $nbPerPage){
+		$query = $this->createQueryBuilder('s')
+			->where('s.vendeur = :vendeur')
 			->setParameter('vendeur', $id)
-			->orderBy('o.date', 'DESC')
+			->orderBy('s.date', 'DESC')
 			->getQuery();
 
 		$query->setFirstResult(($page-1) * $nbPerPage)->setMaxResults($nbPerPage);
 		return new Paginator($query, true);
 	}
-
-	
-
-
 }
 
 ?>

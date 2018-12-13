@@ -1,6 +1,6 @@
 <?php 
 // src/PlatformBundle/Entity/Outils.php
-
+//auteur : Khang NGUYEN - Licence 3 
 namespace UM2\PlatformBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -10,11 +10,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
- * @ORM\Table("um2_Outils_consumption")
- * @ORM\Entity(repositoryClass="UM2\PlatformBundle\Repository\OutilsRepository")
+ * @ORM\Table("um2_Outils_User")
+ * @ORM\Entity(repositoryClass="UM2\PlatformBundle\Repository\OutilsUserRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class OutilsConsumption
+class OutilsUser
 {
     /**
      * @ORM\Column(name="id", type="integer")
@@ -26,14 +26,14 @@ class OutilsConsumption
 	/**
 	 *
 	 * @ORM\ManyToOne(targetEntity="UM2\PlatformBundle\Entity\Outils", cascade={"persist"})
-	 * JoinColumn(nullable=false)
+	 * @ORM\JoinColumn(nullable=false)
 	 */
 	private $outil;
 
 	/**
 	 *
 	 * @ORM\ManyToOne(targetEntity="UM2\UserBundle\Entity\User", cascade={"persist"})
-	 * JoinColumn(nullable=false)
+	 * @ORM\JoinColumn(nullable=false)
 	 */
 	private $user;
 
@@ -41,14 +41,13 @@ class OutilsConsumption
       *
       * @var \DateTime
       * 
-      * @ORM\Column(name="date", type="datetime", unique=true)
+      * @ORM\Column(name="date", type="date")
       * @Assert\DateTime()
       */
     private $date;
 
     public function __construct()
     {
-    	
     }
 
     /**
@@ -64,11 +63,11 @@ class OutilsConsumption
      *
      * @param \DateTime $date
      *
-     * @return OutilsConsumption
+     * @return OutilsUser
      */
-    public function setDate($date)
+    public function setDate($d)
     {
-        $this->date = $date;
+        $this->date = $d;
 
         return $this;
     }
@@ -88,11 +87,11 @@ class OutilsConsumption
      *
      * @param \UM2\PlatformBundle\Entity\Outils $Outil
      *
-     * @return OutilsConsumption
+     * @return OutilsUser
      */
-    public function setOutil(\UM2\PlatformBundle\Entity\Outils $Outil = null)
+    public function setOutil(\UM2\PlatformBundle\Entity\Outils $Outil)
     {
-        $this->Outil = $Outil;
+        $this->outil = $Outil;
 
         return $this;
     }
@@ -104,7 +103,7 @@ class OutilsConsumption
      */
     public function getOutil()
     {
-        return $this->Outil;
+        return $this->outil;
     }
 
     /**
@@ -112,7 +111,7 @@ class OutilsConsumption
      *
      * @param \UM2\UserBundle\Entity\User $user
      *
-     * @return OutilsConsumption
+     * @return OutilsUser
      */
     public function setUser(\UM2\UserBundle\Entity\User $user = null)
     {

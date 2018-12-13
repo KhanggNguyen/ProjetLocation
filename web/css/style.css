@@ -1,1 +1,22 @@
-body { padding-bottom: 70px; }
+html,body{
+	height:100%;
+}
+
+div.container { 
+	padding-bottom: 50px; 
+	overflow:auto;
+	min-height:100%;
+}
+
+footer.footer{
+	position:relative;
+	margin-top: -50px;
+	height:50px;
+	clear:both;
+	padding-top:20px;
+}
+
+.disabled {
+    pointer-events:none; //This makes it not clickable
+    opacity:0.6;         //This grays it out to look disabled
+}

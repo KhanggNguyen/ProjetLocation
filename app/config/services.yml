@@ -23,3 +23,6 @@ services:
     UM2\UserBundle\Controller\SecurityController:
         autowire: true # or define your controller constructor and configure its arguments explicitly
         tags: ['controller.service_arguments']
+
+    UM2\UserBundle\:
+        resource: '../../src/UM2/UserBundle/*'

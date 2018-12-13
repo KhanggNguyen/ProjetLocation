@@ -8,6 +8,36 @@ um2_outil_add:
     path: /outils/add/
     defaults: { _controller: UM2PlatformBundle:Outils:add }
 
+um2_outil_edit:
+    path: /outils/edit/{id}
+    defaults: { _controller:UM2PlatformBundle:Outils:add}
+    requirements:
+        id: \d+
+
+um2_outil_rent:
+    path: /outils/rent/{id}
+    defaults: { _controller: UM2PlatformBundle:Outils:rent }
+    requirements:
+        id: \d+
+
+um2_outil_deactivate:
+    path: /outils/deactivate/{id}
+    defaults: { _controller: UM2PlatformBundle:Outils:activate }
+    requirements:
+        id: \d+
+
+um2_outil_activate:
+    path: /outils/activate/{id}
+    defaults: { _controller: UM2PlatformBundle:Outils:activate }
+    requirements:
+        id: \d+
+
+um2_outil_delete:
+    path: /outils/delete/{id}
+    defaults: { _controller: UM2PlatformBundle:Outils:delete }
+    requirements:
+        id: \d+
+
 um2_outil_index:
     path: /outils/{page}
     defaults:
@@ -16,3 +46,72 @@ um2_outil_index:
     requirements: 
         page: \d*
 
+um2_outils_user:
+    path: /outils/mytools/{page}/{nbPerPage}
+    defaults: 
+        _controller: UM2PlatformBundle:Outils:showListTools
+        page: 1
+        nbPerPage: 5
+    requirements:
+        page: \d*
+
+
+
+
+um2_service_view:
+    path: /service/view/{id}
+    defaults: { _controller: UM2PlatformBundle:Services:view }
+    requirements:
+        id: \d+
+
+um2_service_index:
+    path: /service/{page}
+    defaults:
+        _controller: UM2PlatformBundle:Services:index 
+        page:        1
+    requirements: 
+        page: \d*
+
+um2_service_add:
+    path: /service/add/
+    defaults: { _controller: UM2PlatformBundle:Services:add }
+
+um2_service_edit:
+    path: /service/edit/{id}
+    defaults: { _controller:UM2PlatformBundle:Services:add}
+    requirements:
+        id: \d+
+
+um2_service_rent:
+    path: /service/rent/{idService}/{idHoraire}
+    defaults: { _controller: UM2PlatformBundle:Services:rent }
+    requirements:
+        idService: \d+
+        idHoraire: \d+
+
+um2_services_user:
+    path: /service/myservices/{page}/{nbPerPage}
+    defaults: 
+        _controller: UM2PlatformBundle:Services:showListServices
+        page: 1
+        nbPerPage: 5
+    requirements:
+        page: \d*
+
+um2_service_deactivate:
+    path: /service/deactivate/{id}
+    defaults: { _controller: UM2PlatformBundle:Services:activate }
+    requirements:
+        id: \d+
+
+um2_service_activate:
+    path: /service/activate/{id}
+    defaults: { _controller: UM2PlatformBundle:Services:activate }
+    requirements:
+        id: \d+
+
+um2_service_delete:
+    path: /services/delete/{id}
+    defaults: { _controller: UM2PlatformBundle:Services:delete }
+    requirements:
+        id: \d+

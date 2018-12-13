@@ -1,0 +1,43 @@
+{% extends "UM2CoreBundle::layout.html.twig" %}
+{% form_theme formServices 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+
+	{{ form_start(formServices) }}
+	{{ form_row(formServices.titre, {'label' : 'Le titre du service à proposer', 'attr' : {'placeholder' : 'Tondre votre jardin ...'}}) }}
+	{{ form_row(formServices.prix, { 'label' : 'Le prix par heure du service', 'attr' : { 'placeholder' : '20'}}) }}
+	{{ form_row(formServices.lieu, { 'label' : 'Le lieu de location', 'attr' : { 'placeholder' : 'Montpellier,...'}}) }}
+	{{ form_row(formServices.descriptif, { 'label' : 'La description du service', 'attr' : {'placeholder' : 'Je vais tondre votre jardin à prix pas cher'}}) }}
+	<div>
+		<ul id="horaire-fields-list"
+			data-prototype="{{form_widget(formServices.plageshoraire.vars.prototype)|e }}"
+			data-widget-tags="{{ '<li></li>'|e}}">
+			{{ form_row(formServices.plageshoraire, { 'label' : 'Les plages horaire à proposer'})}}
+			{% for horaireField in formServices.plageshoraire %}
+				<li>
+					{{ form_errors(horaireField) }}
+					{{ form_widget(horaireField) }}
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+	<button type="button" class="newPlage btn btn-success" data-list="#horaire-fields-list">Ajouter une plage d'horaire</button>
+	<div>
+        <input type="submit" class="btn btn-primary" value="Ajouter" />
+    </div>
+	{{ form_end(formServices)}}
+
+{% for flashMessage in app.session.get('flashes') %}
+
+<div class="alert alert-error">
+    {{ flashMessage }}
+</div>
+
+{% endfor %}
+
+{% block javascripts %}
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script type="text/javascript" src="{{ asset('js/newPlage.js') }}"></script>
+{% endblock javascripts %}
+
+{% endblock %}

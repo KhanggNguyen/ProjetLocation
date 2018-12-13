@@ -1,5 +1,8 @@
 <?php
 // src/OC/PlatformBundle/Entity/Image
+//auteur : Khang NGUYEN - Licence 3 
+
+
 namespace UM2\PlatformBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;

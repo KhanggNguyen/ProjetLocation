@@ -18,3 +18,25 @@ um2_user_reset:
   path: /reset/
   defaults: { _controller: UM2UserBundle:Security:reset}
 
+um2_user_view:
+  path: /view/{id}
+  defaults: { _controller: UM2UserBundle:Profile:view}
+  requirements:
+        id: \d+
+
+um2_user_deactivate:
+  path: /deactivate/{id}
+  defaults: { _controller:UM2UserBundle:Profile:activate}
+  requirements:
+    id: \d+
+
+um2_user_activate:
+  path: /activate/{id}
+  defaults: { _controller:UM2UserBundle:Profile:activate}
+  requirements:
+    id: \d+
+
+um2_command_encours:
+  path: /command/
+  defaults: { _controller:UM2UserBundle:Profile:commande}
+  
