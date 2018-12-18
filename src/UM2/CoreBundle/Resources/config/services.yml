@@ -2,3 +2,6 @@ services:
 #    um2_core.example:
 #        class: UM2\CoreBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
+
+
+  

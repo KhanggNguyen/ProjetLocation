@@ -15,9 +15,14 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 use UM2\PlatformBundle\Entity\Outils;
 use UM2\PlatformBundle\Entity\OutilsUser;
+use UM2\PlatformBundle\Entity\OutilsTaxonomie;
+use UM2\PlatformBundle\Entity\Taxonomie;
+
 use UM2\PlatformBundle\Form\OutilsType;
 use UM2\PlatformBundle\Form\OutilsEditType;
+
 use UM2\PlatformBundle\Repository\OutilsRepository;
+use UM2\PlatformBundle\Repository\OutilsTaxonomieRepository;
 use Symfony\Component\Validator\Constraints\DateTime;
 
 
@@ -112,14 +117,24 @@ class OutilsController extends Controller
             $outil = new Outils();
         }
         $user = $this->get('security.token_storage')->getToken()->getUser();
-        
-        
 
         $routeName = $request->get('_route');
         if($routeName == 'um2_outil_edit'){
             if(!$outil->getVendeur()->getId() == $user->getId()){
                 return $this->redirectToRoute('um2_outil_view', ['id' => $outil->getId()]);
             }
+            $listTaxonomies = $this->getDoctrine()
+                ->getManager()
+                ->getRepository('UM2PlatformBundle:OutilsTaxonomie')
+                ->findByOutil($outil);
+            $listMotsCles = array();
+            foreach($listTaxonomies as $taxonomie){
+                array_push($listMotsCles,$taxonomie->getMotcle()->getMotcle());
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($taxonomie);
+            }
+
+            $motsCles = implode(" ", $listMotsCles);
             $form = $this->createForm(OutilsEditType::class, $outil);
         }else{
             $form = $this->createForm(OutilsType::class, $outil);
@@ -130,8 +145,24 @@ class OutilsController extends Controller
             if(!$outil->getId()){
                 $outil->setDate();
             }
-            $outil->setVendeur($user);
             $manager=$this->getDoctrine()->getManager();
+
+            $listMotsCles = $request->get('motscles');
+            $array_listMotsCles = explode(" ", $listMotsCles);
+            foreach($array_listMotsCles as $mot){
+                $mot_temp = new Taxonomie();
+                $mot_temp->setMotCle($mot);
+                $mot_temp->setType('Outil');
+                $manager->persist($mot_temp);
+
+                $motOutil = new OutilsTaxonomie();
+                $motOutil->setOutil($outil);
+                $motOutil->setMotcle($mot_temp);
+                $manager->persist($motOutil);
+            }
+
+            $outil->setVendeur($user);
+            
             $manager->persist($outil);
             $manager->flush();
 
@@ -140,7 +171,8 @@ class OutilsController extends Controller
 
         return $this->render('UM2PlatformBundle:Outils:add.html.twig', [
             'formOutils' => $form->createView(),
-            'editMode' => $outil->getId()!== null
+            'editMode' => $outil->getId()!== null,
+            'motscle' => $motsCles
         ]);
     }
 

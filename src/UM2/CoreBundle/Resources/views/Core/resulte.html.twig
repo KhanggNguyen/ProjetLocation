@@ -1,0 +1,39 @@
+{% extends "UM2CoreBundle::layout.html.twig" %}
+
+{% block body %}
+
+	<h2>Liste d'outils</h2>
+
+	<ul>
+		{% for outil in outils %}
+			{% if outil.active %}
+				<li>
+					<a href=" {{path('um2_outil_view', {'id' : outil.id}) }}">
+						{{ outil.titre }}
+					</a>
+					par {{ outil.vendeur.username }}, 
+					le {{ outil.date|date('d/m/Y') }}
+					<p> Loue le : {{ outil.date|date('d/m/Y') }} </p>
+				</li>
+			{% endif %}
+		{% endfor %}
+	</ul>
+
+	<h2>Liste de services</h2>
+
+	<ul>
+		{% for service in services %}
+			{% if service.active %}
+				<li>
+					<a href=" {{path('um2_service_view', {'id' : service.id}) }}">
+						{{ service.titre }}
+					</a>
+					par {{ service.vendeur.username }}, 
+					le {{ service.date|date('d/m/Y') }}
+					<p> Loue le : {{ service.date|date('d/m/Y') }} </p>
+				</li>
+			{% endif %}
+		{% endfor %}
+	</ul>
+
+{% endblock body %}

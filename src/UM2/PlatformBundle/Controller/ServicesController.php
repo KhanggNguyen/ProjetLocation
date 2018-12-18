@@ -140,6 +140,19 @@ class ServicesController extends Controller
             if(!$service->getVendeur()->getId() == $user->getId()){
                 return $this->redirectToRoute('um2_service_view', ['id' => $service->getId()]);
             }
+            $listTaxonomies = $this->getDoctrine()
+                ->getManager()
+                ->getRepository('UM2PlatformBundle:OutilsTaxonomie')
+                ->findByOutil($outil);
+            $listMotsCles = array();
+            foreach($listTaxonomies as $taxonomie){
+                array_push($listMotsCles,$taxonomie->getMotcle()->getMotcle());
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($taxonomie);
+            }
+
+            $motsCles = implode(" ", $listMotsCles);
+
             $form = $this->createForm(ServicesEditType::class, $service);
         }else{
             $form = $this->createForm(ServicesType::class, $service);
@@ -151,6 +164,21 @@ class ServicesController extends Controller
                 $service->setDate();
             }
             $manager=$this->getDoctrine()->getManager();
+
+            $listMotsCles = $request->get('motscles');
+            $array_listMotsCles = explode(" ", $listMotsCles);
+            foreach($array_listMotsCles as $mot){
+                $mot_temp = new Taxonomie();
+                $mot_temp->setMotCle($mot);
+                $mot_temp->setType('Service');
+                $manager->persist($mot_temp);
+
+                $motOutil = new OutilsTaxonomie();
+                $motOutil->setOutil($outil);
+                $motOutil->setMotcle($mot_temp);
+                $manager->persist($motOutil);
+            }
+
             $plageshoraire = $service->getPlagesHoraire();
             foreach($plageshoraire as $horaire){
             	$horaire->setDateService($horaire->getDateService());

@@ -2,3 +2,9 @@
 um2_core_home:
     path:     /
     defaults: { _controller: UM2CoreBundle:Core:index }
+
+um2_core_resulte:
+  path: /resulte/{query}
+  defaults: 
+    _controller: UM2CoreBundle:Core:resulte
+    query: 

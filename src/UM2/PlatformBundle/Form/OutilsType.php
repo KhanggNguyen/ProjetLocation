@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use UM2\PlatformBundle\Form\ImageType;
+
 use UM2\PlatformBundle\Entity\Outils;
 
 class OutilsType extends AbstractType

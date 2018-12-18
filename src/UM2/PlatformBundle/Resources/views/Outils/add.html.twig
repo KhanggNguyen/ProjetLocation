@@ -7,6 +7,8 @@
 	{{ form_row(formOutils.lieu, { 'label' : 'Le lieu de location', 'attr' : { 'placeholder' : 'Montpellier,...'}}) }}
 	{{ form_row(formOutils.image.file, { 'label' : 'L\'image de description'}) }}
 	{{ form_row(formOutils.garantie, { 'label' : 'L\'objet sous garantie'}) }}
+	<label for="motcle">Les mots clés : </label>
+	<input type="text" name="motscles" id="motcle" class="form-control" value="{{ motscle }}"><br>
 	<div>
         <input type="submit" class="btn btn-primary" value="Ajouter" />
     </div>
