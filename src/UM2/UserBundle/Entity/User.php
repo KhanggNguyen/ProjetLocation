@@ -1,6 +1,6 @@
 <?php
 // src/UserBundle/Entity/User.php
-//auteur : Khang NGUYEN - Licence 3 
+//auteur : Huu Khang NGUYEN - Hoai Nam NGUYEN
 namespace UM2\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;

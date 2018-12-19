@@ -1,6 +1,6 @@
 <?php
 // src/UserBundle/Form/RegistrationType.php
-//auteur : Khang NGUYEN - Licence 3 
+//auteur : Huu Khang NGUYEN - Hoai Nam NGUYEN
 namespace UM2\UserBundle\Form;
 
 use Symfony\Component\Form\AbstractType;

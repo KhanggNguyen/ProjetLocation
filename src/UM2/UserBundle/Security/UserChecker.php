@@ -1,5 +1,5 @@
 <?php
-
+//auteur : Huu Khang NGUYEN - Hoai Nam NGUYEN
 namespace UM2\UserBundle\Security;
 
 use AppBundle\Security\User as AppUser;

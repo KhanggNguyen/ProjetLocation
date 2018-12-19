@@ -1,6 +1,6 @@
 <?php 
 namespace UserBundle;
-//auteur : Khang NGUYEN - Licence 3 
+//auteur : Huu Khang NGUYEN - Hoai Nam NGUYEN
 use Symfony\Component\HtttpKernel\Bundle\Bundle;
 
 class UserBundle extends Bundle

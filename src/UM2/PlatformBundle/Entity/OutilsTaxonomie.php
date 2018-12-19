@@ -1,6 +1,6 @@
 <?php 
 // src/PlatformBundle/Entity/Outils.php
-//auteur : Khang NGUYEN - Licence 3 
+//auteur : Huu Khang NGUYEN - Hoai Nam NGUYEN
 namespace UM2\PlatformBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
