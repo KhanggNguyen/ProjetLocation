@@ -10,6 +10,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 use UM2\PlatformBundle\Entity\Services;
+use UM2\PlatformBundle\Entity\Taxonomie;
+
+use UM2\PlatformBundle\Entity\ServicesTaxonomie;
 use UM2\PlatformBundle\Entity\ServicesUser;
 use UM2\PlatformBundle\Entity\PlagesHoraire;
 use UM2\PlatformBundle\Form\ServicesType;
@@ -134,7 +137,7 @@ class ServicesController extends Controller
         }
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
-
+        $motsCles = "";
         $routeName = $request->get('_route');
         if($routeName == 'um2_service_edit'){
             if(!$service->getVendeur()->getId() == $user->getId()){
@@ -142,8 +145,8 @@ class ServicesController extends Controller
             }
             $listTaxonomies = $this->getDoctrine()
                 ->getManager()
-                ->getRepository('UM2PlatformBundle:OutilsTaxonomie')
-                ->findByOutil($outil);
+                ->getRepository('UM2PlatformBundle:ServicesTaxonomie')
+                ->findByService($service);
             $listMotsCles = array();
             foreach($listTaxonomies as $taxonomie){
                 array_push($listMotsCles,$taxonomie->getMotcle()->getMotcle());
@@ -173,10 +176,10 @@ class ServicesController extends Controller
                 $mot_temp->setType('Service');
                 $manager->persist($mot_temp);
 
-                $motOutil = new OutilsTaxonomie();
-                $motOutil->setOutil($outil);
-                $motOutil->setMotcle($mot_temp);
-                $manager->persist($motOutil);
+                $motService = new ServicesTaxonomie();
+                $motService->setService($service);
+                $motService->setMotcle($mot_temp);
+                $manager->persist($motService);
             }
 
             $plageshoraire = $service->getPlagesHoraire();
@@ -197,6 +200,7 @@ class ServicesController extends Controller
         return $this->render('UM2PlatformBundle:Services:add.html.twig', [
         	'service' => $service,
             'formServices' => $form->createView(),
+            'motscle' => $motsCles,
             'editMode' => $service->getId() !== null
         ]);
     }

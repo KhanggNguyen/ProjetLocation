@@ -117,8 +117,9 @@ class OutilsController extends Controller
             $outil = new Outils();
         }
         $user = $this->get('security.token_storage')->getToken()->getUser();
-
+        $motsCles = "";
         $routeName = $request->get('_route');
+    
         if($routeName == 'um2_outil_edit'){
             if(!$outil->getVendeur()->getId() == $user->getId()){
                 return $this->redirectToRoute('um2_outil_view', ['id' => $outil->getId()]);
@@ -150,15 +151,15 @@ class OutilsController extends Controller
             $listMotsCles = $request->get('motscles');
             $array_listMotsCles = explode(" ", $listMotsCles);
             foreach($array_listMotsCles as $mot){
-                $mot_temp = new Taxonomie();
-                $mot_temp->setMotCle($mot);
-                $mot_temp->setType('Outil');
-                $manager->persist($mot_temp);
+                    $mot_temp = new Taxonomie();
+                    $mot_temp->setMotCle($mot);
+                    $mot_temp->setType('Outil');
+                    $manager->persist($mot_temp);
 
-                $motOutil = new OutilsTaxonomie();
-                $motOutil->setOutil($outil);
-                $motOutil->setMotcle($mot_temp);
-                $manager->persist($motOutil);
+                    $motOutil = new OutilsTaxonomie();
+                    $motOutil->setOutil($outil);
+                    $motOutil->setMotcle($mot_temp);
+                    $manager->persist($motOutil);
             }
 
             $outil->setVendeur($user);

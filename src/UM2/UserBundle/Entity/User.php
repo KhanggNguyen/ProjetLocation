@@ -8,6 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
@@ -137,9 +138,8 @@ class User implements AdvancedUserInterface, \Serializable
 
     public function __construct()
     {   $this->isNonLocked = true;
-        $this->isActive = true;
         $this->estTropConsomme = false;
-        $this->roles = array('ROLE_USER');
+        $this->roles = new ArrayCollection();
         $this->dateActive = new \DateTime();
     }
 
@@ -303,7 +303,7 @@ class User implements AdvancedUserInterface, \Serializable
 
     public function getRoles()
     {
-        return['ROLE_USER'];
+        return $this->roles;
     }
 
     /**

@@ -43,6 +43,8 @@ class SecurityController extends Controller
     	{
     		$hash = $passwordEncoder->encodePassword($user, $user->getPassword()); //on a décidé l'algorithme à utiliser par encoder est bcrypt dans security.yml
     		$user->setPassword($hash);
+            $user->setIsActive(true);
+            $user->setRoles('ROLE_USER');
     		$manager=$this->getDoctrine()->getManager();
     		$manager->persist($user);
     		$manager->flush();

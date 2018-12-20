@@ -2,6 +2,10 @@ um2_user_register:
     path:     /register/
     defaults: { _controller: UM2UserBundle:Security:register}
 
+um2_user_index:
+  path: /liste/
+  defaults: { _controller: UM2UserBundle:Profile:index}
+
 um2_user_login:
     path:     /login/
     defaults: { _controller: UM2UserBundle:Security:login}

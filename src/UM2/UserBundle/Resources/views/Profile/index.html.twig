@@ -1,0 +1,19 @@
+{% extends "UM2CoreBundle::layout.html.twig" %}
+
+{% block body %}
+
+	<h2>Liste des utilisateurs</h2>
+
+	<ul>
+		{% for user in listUsers %}
+			<li>
+				<a href=" {{path('um2_user_view', {'id' : user.id}) }}">
+					{{ user.username }}
+				</a>
+				<br>
+				etat du compte : {% if user.isActive %} active {% else %} désactivé {% endif %}, 
+			</li>
+		{% endfor %}
+	</ul>
+
+{% endblock body %}

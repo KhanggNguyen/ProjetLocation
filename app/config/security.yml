@@ -42,7 +42,7 @@ security:
                 csrf_token_id: a_private_string
 
     access_control:
-        - {path: ^/admin, roles: ROLE_SUPER_ADMIN}
+        - {path: /admin, roles: ROLE_SUPER_ADMIN}
         - {path: /login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
 
     always_authenticate_before_granting: true

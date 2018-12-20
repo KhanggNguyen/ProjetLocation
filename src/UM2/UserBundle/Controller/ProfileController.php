@@ -19,6 +19,17 @@ class ProfileController extends Controller
 		));
 	}
 
+    public function indexAction(){
+        $listUsers = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('UM2UserBundle:User')
+            ->findAll();
+
+        return $this->render('UM2UserBundle:Profile:index.html.twig', [
+            'listUsers' => $listUsers,
+        ]);
+    }
+
 	public function activateAction(User $user){
 		$auth_checker = $this->get('security.authorization_checker');
         if(!$auth_checker->isGranted('ROLE_ADMIN')){
@@ -28,11 +39,15 @@ class ProfileController extends Controller
         if(!$user){
         	return $this->redirectToRoute("um2_core_home");
         }
-        if($user->getEstActive()){
-        	$user->setEstActive(false);
+        if($user->getIsActive()){
+            $user->setIsActive(false);
         }else{
-        	$user->setEstActive(true);
+        	$user->setIsActive(true);
         }
+
+        $manager=$this->getDoctrine()->getManager();
+            $manager->persist($user);
+            $manager->flush();
 
         return $this->render('UM2UserBundle:Profile:view.html.twig', [
             'user' => $user,
